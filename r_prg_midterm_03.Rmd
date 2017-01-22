@@ -1,0 +1,72 @@
+---
+title: "ggplot2 期中作業"
+author: "Ting-Yu Hsiao"
+date: "2017年1月19日"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+##資料概觀
+
+```{r message= FALSE}
+library(ggplot2)
+```
+
+我使用`diamonds` 資料集，它的資訊如下：
+
+```{r}
+str(diamonds)
+summary(diamonds)
+```
+
+###散布圖
+
+```{r }
+ggplot(diamonds, aes(x = price, y = carat)) + geom_point(size= 1)+ ggtitle("Diamonds price vs. carat" )+ xlab("price")+ ylab("carat")
+```
+
+###線圖
+
+```{r}
+ggplot(diamonds, aes(x = price, y = carat))  + geom_line()
+```
+
+###直方圖
+
+納入淨度(clarity)變數展開
+
+```{r}
+ggplot(diamonds, aes(x = price)) + geom_histogram() + facet_wrap(~ clarity)
+```
+
+###盒鬚圖
+
+```{r}
+ggplot(diamonds, aes(x = 1, y = price)) + geom_boxplot()
+```
+
+###長條圖
+
+```{r}
+ggplot(diamonds, aes(clarity)) +geom_bar(width = 0.5)
+```
+
+
+```{r}
+ggplot(diamonds, aes(clarity)) +geom_bar(width = 0.5, aes(fill = cut))
+```
+
+利用`ploty` 套件中的ggploty()函數為長條圖加入互動性
+
+```{r message= FALSE}
+library(plotly)
+```
+
+```{r}
+static_diamond <- ggplot(diamonds, aes(x = clarity)) +
+  geom_bar(aes(fill = cut))
+ggplotly(static_diamond)
+```
